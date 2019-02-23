@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/addons.css" rel="stylesheet">
+    <link href="assets/codemirror/lib/codemirror.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="assets/codemirror/lib/codemirror.js"></script>
+    <script src="assets/codemirror/lib/formatting.js"></script>
+    <link href="assets/codemirror/theme/dracula.css" rel="stylesheet">
+    <script src="assets/codemirror/mode/xml/xml.js"></script>
+    <script src="assets/codemirror/mode/css/css.js"></script>
+    <script src="assets/codemirror/mode/javascript/javascript.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://jqwidgets.com/public/jqwidgets/jqx-all.js"></script>
+    <script src="https://togetherjs.com/togetherjs-min.js"></script>
+	<base url="/">
+	<script>
+	$(window).load(function() {
+		$(".pre-loading").fadeOut("slow");
+	});
+	</script>
+    <title>Песочница KITZE </title>
+</head>
+
+<body>
+	<div class="pre-loading"></div>
+    <nav class="navbar navbar-default">
+        <div class="navbar-navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#toolbar">
+                <span class="sr-only">Жмяк!</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-console" aria-hidden="true"></span> KITZE</a>
+        </div>
+        <!-- navbar.toggle:tag-->
+        <div class="collapse navbar-collapse" id="toolbar">
+            <ul class="nav navbar-nav">
+                <li><a href="#" onclick="renderPreview()"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Запуск</a>
+                </li>
+                <li id="btnTogether"><a href=""><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Совместно</a>
+                </li>
+		<li><a href="#" onclick="create(source, filename, 'text/html')" id="generateHTML"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Сгенерировать файл</a></li>
+            </ul>
+            <div id="app-updates" class="hidden"></div>
+            <div id="app-updates-highlighter"></div>
+        </div>
+		<div id="app-updates" class="hidden"></div>
+        <div id="app-updates-highlighter"></div>
+        <!-- navbar.close:tag -->
+    </nav>
+    <div id="sidebar">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<!-- Основные настройки -->
+			<div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Основные настройки
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+						<input type="text" id="filename" placeholder="Имя файла">
+						<textarea id="kitze-options" placeholder="Тут могло быть описание, но чуть позже :3"></textarea>
+					</div>
+				</div>
+			</div>
+
+            <!-- Палитра -->
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingFive">
+                    <h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="true" aria-controls="collapseFix">Палитра цветов</a>
+					</h4>
+                </div>
+                <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                    <div class="panel-body">
+                        <div id="colorPicker"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Информация -->
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingSix">
+                    <h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="true" aria-controls="collapseSix">Информация</a>
+					</h4>
+                </div>
+                <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                    <div class="panel-body">
+                        <p>KITZE - песочница веб-разработчика, здесь вы можете протестировать (HTML/JS/CSS) код.</p>
+                        <p>Автор / разработчик <a title="Блог Økame" href="https://catsbit.ru">Catsbit</a>
+                        </p>
+                        <p>Особая благодарность: <a href="http://kbcode.neocities.org">K. Bekker</a>
+                        </p>
+                        <p><strong>Лицензия</strong>
+                        </p>
+                        <p>Все материалы распространяются бесплатно!</p>
+                        <p>Сайт, авторы и разработчики сайта не несут никакой ответственности за какие-либо убытки или ущерб любого рода, во время использования данного сервиса.</p>
+                        <p><strong>Друзья и проекты</strong>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="editors">
+        <div class="top">
+            <!-- HTML -->
+            <div class="editorContainer">
+                <textarea id="htmlArea"></textarea>
+                <div class="windowLabelCont" style="top:0;left:468px;">
+                    <a href="#" onclick="openModal('html')" class="windowLabel" data-panel="html" data-popover-trigger="html">
+                        <span class="label">EDIT HTML</span>
+                    </a>
+                </div>
+            </div>
+            <!-- CSS -->
+            <div class="editorContainer">
+                <textarea id="cssArea"></textarea>
+                <div class="windowLabelCont" style="top:0;right:30px;">
+                    <a href="#" onclick="openModal('css')" class="windowLabel" data-panel="html" data-popover-trigger="html">
+                        <span class="label">EDIT CSS</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <!-- JS -->
+            <div class="editorContainer">
+                <textarea id="jsArea"></textarea>
+                <div class="windowLabelCont" style="bottom:295px;left:480px;">
+                    <a href="#" onclick="openModal('js')" class="windowLabel" data-panel="html" data-popover-trigger="html">
+                        <span class="label">EDIT JS</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Вывод -->
+            <div class="editorContainer">
+                <iframe id="previewBox" class="editor" name="result" sandbox="allow-forms allow-modals allow-popups allow-scripts allow-same-origin" frameborder="0" srcdoc=""></iframe>
+
+            </div>
+        </div>
+    </div>
+    <!-- MODAL -->
+    <div id="html" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="modalClose()">&times;</span>
+            <textarea id="htmlModal"></textarea>
+            <button onclick="copyToEditor('html');modalClose()">Вставить</button>
+			<button onclick="modalClose()">Закрыть</button>
+        </div>
+    </div>
+    <div id="css" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="modalClose()">&times;</span>
+            <textarea id="cssModal"></textarea>
+            <button onclick="copyToEditor('css');modalClose()">Вставить</button>
+			<button onclick="modalClose()">Закрыть</button>
+        </div>
+    </div>
+    <div id="js" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="modalClose()">&times;</span>
+            <textarea id="jsModal">test</textarea>
+            <button onclick="copyToEditor('js');modalClose()">Вставить</button>
+			<button onclick="modalClose()">Закрыть</button>
+        </div>
+    </div>
+    <!-- EMD:MODAL -->
+    <script src="core/kitzecode.js" async></script>
+    <script src="addons/modal.js" async></script>
+    <script src="addons/colorpicker.js"></script>
+	<script src="addons/kitzeupdates.js"></script>
+</body>
+</html>
