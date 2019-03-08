@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link href="player.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+    <script src="code.js" async></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+<body>
+    <div id="kytmp">
+        <div id="title"></div>
+        <span id="current-time">0:00</span> 
+        <input type="range" id="progress-bar" value="0"> 
+        <span id="duration">0:00</span> 
+        <br>
+        <i id="prev" class="fa fa-backward"></i>
+        <i id="play" class="fa fa-play"></i>
+        <i id="pause" class="fa fa-pause" style="display:none"></i>
+        <i id="next" class="fa fa-forward"></i>
+        <br>
+        <input id="volume" type="range" min="1" max="100" value="100">
+        <br>
+          Ссылка на плейлист: <input id="playlistLink" autocomplete="off">
+        <button id="submitPlaylist">Submit</button>
+        <div id="video-placeholder" style="visibility: hidden; height: 2px; width: 2px;"></div>
+    </div>
+</body>
+</html>
