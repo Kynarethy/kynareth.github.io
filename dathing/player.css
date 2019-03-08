@@ -1,0 +1,11 @@
+
+#progress-bar {
+    position: relative;
+    width: 220px;
+    height: 10px;
+    cursor: pointer;
+}
+#volume {
+    writing-mode: bt-lr;
+    appearance: slider-vertical;
+}
